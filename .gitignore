@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# PyTorch
+*.pth
+*.pt
+
+# MLX weights (large files)
+mlx_weights/
+
+# Checkpoints
+checkpoints/*.pth
+checkpoints/*/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs
+outputs/
+runs/
+
+# Temp
+/tmp/
