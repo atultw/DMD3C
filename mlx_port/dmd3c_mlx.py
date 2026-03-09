@@ -52,6 +52,13 @@ def bpdist_mlx(xy: mx.array, idx: mx.array, Valid: mx.array,
     args_list = []
     IPCnum_list = []
 
+    # Create grid of all pixel coordinates (shared across batches)
+    ww = mx.arange(W)
+    hh = mx.arange(H)
+    grid_w, grid_h = mx.meshgrid(ww, hh, indexing='xy')  # both (H, W)
+    grid_w = grid_w.reshape(-1).astype(mx.float32)  # (N,)
+    grid_h = grid_h.reshape(-1).astype(mx.float32)  # (N,)
+
     for b in range(B):
         valid_mask = Valid[b, 0]  # (N,)
 
@@ -73,14 +80,6 @@ def bpdist_mlx(xy: mx.array, idx: mx.array, Valid: mx.array,
         valid_x = xy[0, 0, valid_indices]  # (M_valid,)
         valid_y = xy[0, 1, valid_indices]  # (M_valid,)
         valid_xy = mx.stack([valid_x, valid_y], axis=0)  # (2, M_valid)
-
-        # Create grid of all pixel coordinates
-        # xx, yy for every pixel
-        ww = mx.arange(W)
-        hh = mx.arange(H)
-        grid_w, grid_h = mx.meshgrid(ww, hh, indexing='xy')  # both (H, W)
-        grid_w = grid_w.reshape(-1).astype(mx.float32)  # (N,)
-        grid_h = grid_h.reshape(-1).astype(mx.float32)  # (N,)
 
         # Compute distances: for each of N pixels, distance to each of M_valid sparse pts
         # pixel coords: (N, 1), sparse coords: (1, M_valid)

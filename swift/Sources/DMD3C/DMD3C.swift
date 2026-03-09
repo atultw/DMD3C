@@ -142,6 +142,7 @@ class Conv2dBnAct: Module {
         case "relu": return relu(out)
         case "gelu": return gelu(out)
         case "sigmoid": return sigmoid(out)
+        case "identity": return out
         default: return out
         }
     }

@@ -122,13 +122,14 @@ kernel void conv2d_local_forward(
                 float x_val = x[b * C * H * W + ch * H * W + r * W + c];
 
                 // y layout: [B, C*K*K, H, W] where K*K is indexed as (i+half_k)*K + (j+half_k)
+                // Weight is sampled at CENTER position (row, col), not neighbor position (r, c)
                 int ki = i + half_k;
                 int kj = j + half_k;
                 float y_val = y[b * C * K * K * H * W
                                + ch * K * K * H * W
                                + ki * K * H * W
                                + kj * H * W
-                               + r * W + c];
+                               + row * W + col];
 
                 result += x_val * y_val;
             }

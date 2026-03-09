@@ -89,7 +89,7 @@ def mlx_style_dist(xy, idx, Valid, num, H, W):
             all_ipcnum.append(np.zeros((2, num, N), dtype=np.float32))
             continue
 
-        valid_xy = xy[0, :, valid_indices].T  # (2, M_valid) - note: need transpose
+        valid_xy = xy[0, :, valid_indices].T  # xy indexing gives (M_valid, 2), .T gives (2, M_valid)
 
         ww, hh = np.meshgrid(np.arange(W), np.arange(H))
         grid_w = ww.reshape(-1).astype(np.float32)
